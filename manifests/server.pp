@@ -25,6 +25,9 @@ class rsync::server(
     xinetd::service { 'rsync':
       bind        => $address,
       port        => '873',
+      cps         => '512 10',
+      per_source  => 'UNLIMITED',
+      flags       => 'IPv4',
       server      => '/usr/bin/rsync',
       server_args => "--daemon --config ${conf_file}",
       require     => Package['rsync'],
